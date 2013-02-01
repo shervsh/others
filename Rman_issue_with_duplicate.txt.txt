@@ -1,0 +1,18 @@
+http://laurentschneider.com/wordpress/2013/02/rman-and-dbgsql-message.html?utm_source=dlvr.it&utm_medium=twitter&utm_campaign=Feed%3A+orana+%28OraNA%29
+
+RMAN> duplicate target database to DB02
+  until time "to_date('2013-01-29_00:00:00','YYYY-MM-DD_HH24:MI:SS')"
+  nofilenamecheck ;
+
+DBGSQL:     TARGET> select 2013-01-29_00:00:00 from sys.dual
+DBGSQL:        sqlcode = 911
+RMAN-00571: ===========================================================
+RMAN-00569: =============== ERROR MESSAGE STACK FOLLOWS ===============
+RMAN-00571: ===========================================================
+RMAN-03002: failure of Duplicate Db command at 02/01/2013 17:58:23
+RMAN-05501: aborting duplication of target database
+ORA-01861: literal does not match format string
+I have not found anything useful except bug Bug 9351175 which is fixed in 11.2 (and I have 11.2.0.2/aix), but I could workaround the problem with
+
+
+unset NLS_DATE_FORMAT
